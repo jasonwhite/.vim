@@ -12,39 +12,25 @@ files under version control.
  * [vim-markdown](https://github.com/tpope/vim-markdown)
  * [NERDCommenter](https://github.com/scrooloose/nerdcommenter)
  * [NERDTree](https://github.com/scrooloose/nerdtree) (Toggle with `<F1>`)
- * [vim-session](https://github.com/xolox/vim-session)
- * [vim-surround](https://github.com/tpope/vim-surround)
  * [vim-powerline](https://github.com/Lokaltog/vim-powerline)
- * [vim-taglist](https://github.com/vim-scripts/taglist.vim)
  * [Align](https://github.com/vim-scripts/Align)
-
-### Color Scheme
-Uses the color scheme [White Night][]. Check out that page to see some
-screenshots of it in action.
-
-[White Night]: https://bitbucket.org/jasonwhite/vim-whitenight
-
 
 ## Installing
 
 There are two ways of installing this -- manually or with the install script.
-
-When cloning this repository, be sure to also have [git](http://git-scm.com/)
-installed. This Mercurial repository uses git submodules to include external
-plugins.
 
 ### Manually
 
 #### On Windows
 
 	cd %USERPROFILE%
-	hg clone https://bitbucket.org/jasonwhite/.vim vimfiles
+	git clone https://github.com/jasonwhite/.vim vimfiles
 	mklink /H _vimrc "vimfiles/vimrc"
 	mklink /H _gvimrc "vimfiles/gvimrc"
 
 #### On Unix
 
-	hg clone https://bitbucket.org/jasonwhite/.vim ~/.vim
+	git clone https://github.com/jasonwhite/.vim ~/.vim
 	ln -s ~/.vim/vimrc ~/.vimrc
 	ln -s ~/.vim/gvimrc ~/.gvimrc
 
@@ -61,13 +47,13 @@ Vim and its plugins.
 
 #### On Windows
 
-	hg clone https://bitbucket.org/jasonwhite/.vim dotvim
+	git clone https://github.com/jasonwhite/.vim dotvim
 	cd dotvim
 	install
 
 #### On Unix
 
-	hg clone https://bitbucket.org/jasonwhite/.vim dotvim
+	git clone https://github.com/jasonwhite/.vim dotvim
 	cd dotvim
 	./install
 
