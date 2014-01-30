@@ -14,6 +14,7 @@ files under version control.
  * [NERDTree](https://github.com/scrooloose/nerdtree) (Toggle with `<F1>`)
  * [vim-powerline](https://github.com/Lokaltog/vim-powerline)
  * [Align](https://github.com/vim-scripts/Align)
+ * [UltiSnip](https://github.com/SirVer/ultisnips)
 
 ## Installing
 
