@@ -22,3 +22,6 @@
 [submodule "bundle/d"]
 	path = bundle/d
 	url = git@github.com:JesseKPhillips/d.vim.git
+[submodule "bundle/whitenight"]
+	path = bundle/whitenight
+	url = git@github.com:jasonwhite/vim-whitenight.git
