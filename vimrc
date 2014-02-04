@@ -46,6 +46,11 @@ set textwidth=80
 set timeoutlen=500
 set virtualedit=block
 
+" Need a more POSIX compatible shell
+if &shell =~# 'fish$'
+    set shell=sh
+endif
+
 " Save undo history.
 set undofile
 if has('win32')
