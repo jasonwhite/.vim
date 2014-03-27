@@ -211,6 +211,8 @@ command! -bar -bang SC CloseSession<bang>
 " Align
 map <leader>W= <plug>AM_w=
 
+" airline
+let g:airline_powerline_fonts = 1
 
 "
 " Commands

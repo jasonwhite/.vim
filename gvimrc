@@ -21,8 +21,7 @@ if has('win32')
 	set guifont=courier_new:h10
 elseif has('unix')
 	" Fall back to Monospace if the patched powerline font isn't there.
-	set guifont=Source\ Code\ Pro\ for\ Powerline,monospace\ 10
-	let g:Powerline_symbols = 'fancy'
+	set guifont=Source\ Code\ Pro\ for\ Powerline,Monospace\ 10
 endif
 
 colorscheme whitenight
