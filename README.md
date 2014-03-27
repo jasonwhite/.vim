@@ -5,15 +5,21 @@ files under version control.
 
 # Installing
 
-## Unix
+Clone the repository:
 
-	git clone https://github.com/jasonwhite/.vim ~/.vim
-	ln -s ~/.vim/vimrc ~/.vimrc
-	ln -s ~/.vim/gvimrc ~/.gvimrc
+	$ git clone https://github.com/jasonwhite/.vim ~/.vim
+	$ ln -s ~/.vim/vimrc ~/.vimrc
+	$ ln -s ~/.vim/gvimrc ~/.gvimrc
 
-## Windows
+Download the plugins:
 
-	cd %USERPROFILE%
-	git clone https://github.com/jasonwhite/.vim vimfiles
-	mklink /H _vimrc "vimfiles/vimrc"
-	mklink /H _gvimrc "vimfiles/gvimrc"
+    $ git submodule init --recursive
+    $ git submodule update --recursive
+
+Install fonts for [powerline][]/[airline][]:
+
+    $ git clone https://github.com/Lokaltog/powerline-fonts.git ~/.fonts/powerline-fonts
+    $ fc-cache -fv
+
+[powerline]: https://github.com/Lokaltog/powerline
+[airline]: https://github.com/bling/vim-airline
