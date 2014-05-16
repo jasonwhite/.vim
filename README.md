@@ -3,18 +3,15 @@
 Because no Vim user should get caught without their tediously configured Vim
 files under version control.
 
+See the `bundle/` directory for which plugins are included.
+
 # Installing
 
 Clone the repository:
 
-	$ git clone https://github.com/jasonwhite/.vim ~/.vim
+	$ git clone --recursive https://github.com/jasonwhite/.vim.git ~/.vim
 	$ ln -s ~/.vim/vimrc ~/.vimrc
 	$ ln -s ~/.vim/gvimrc ~/.gvimrc
-
-Download the plugins:
-
-    $ git submodule init --recursive
-    $ git submodule update --recursive
 
 Install fonts for [powerline][]/[airline][]:
 
