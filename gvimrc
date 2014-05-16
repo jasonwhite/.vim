@@ -24,4 +24,4 @@ elseif has('unix')
 	set guifont=Source\ Code\ Pro\ for\ Powerline,Monospace\ 10
 endif
 
-colorscheme whitenight
+colorscheme github

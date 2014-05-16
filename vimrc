@@ -40,7 +40,7 @@ set sidescrolloff=12
 set smartindent
 set softtabstop=4
 set splitright
-set synmaxcol=128
+set synmaxcol=1024
 set tabstop=4
 set textwidth=80
 set timeoutlen=500
@@ -52,14 +52,16 @@ if &shell =~# 'fish$'
 endif
 
 " Save undo history.
-set undofile
-if has('win32')
-	set undodir=$HOME\\vimfiles\\undo
-else
-	set undodir=$HOME/.vim/undo
-endif
-if !isdirectory(&undodir)
-	call mkdir(&undodir)
+if has('persistent_undo')
+    set undofile
+    if has('win32')
+        set undodir=$HOME\\vimfiles\\undo
+    else
+        set undodir=$HOME/.vim/undo
+    endif
+    if !isdirectory(&undodir)
+        call mkdir(&undodir)
+    endif
 endif
 
 
