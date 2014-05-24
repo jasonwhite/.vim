@@ -27,6 +27,7 @@ set backspace=indent,eol,start
 set clipboard^=unnamed
 set expandtab
 set fileformats=unix,dos
+set formatoptions=tcroqanj
 set laststatus=2
 set nowrap
 set number
@@ -249,7 +250,6 @@ augroup vimrc
 	au FileType vim call s:ft_vim()
 	au FileType markdown call s:ft_markdown()
 augroup end
-
 
 function! s:ft_cpp()
 	vmap <buffer> <silent> <leader>ac :call <SID>align('^\(.\{-}\)\(\s*\)\(//.*\)')<CR>
