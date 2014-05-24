@@ -204,12 +204,6 @@ map <silent> - <leader>c<space>
 " TagList
 nnoremap <silent> <F8> :TlistToggle<CR>
 
-" Session Manager 2 letter shortcuts
-command! -bar -bang -nargs=? -complete=customlist,xolox#session#complete_names SS SaveSession<bang> <args>
-command! -bar -bang -nargs=? -complete=customlist,xolox#session#complete_names SO OpenSession<bang> <args>
-command! -bar -bang -nargs=? -complete=customlist,xolox#session#complete_names SD DeleteSession<bang> <args>
-command! -bar -bang SC CloseSession<bang>
-
 " Align
 map <leader>W= <plug>AM_w=
 
@@ -280,31 +274,6 @@ endfunction
 " General functions
 "
 
-" Adds the specified string to the beginning of the current line
-function! s:commentline( prefix, suffix )
-	let l = getline('.')
-	if !empty(l) " Don't comment empty lines
-		call setline( '.', a:prefix . l . a:suffix )
-	endif
-endfunction
-
-" Removes the specified pattern (if any) from the beginning of the current line
-" or range of lines (in visual mode).
-function! s:uncommentline( pat )
-	call setline( '.', substitute( getline('.'), '^\(\s*\)'.a:pat, '\1', '' ) )
-endfunction
-
-" Do a substitution on the current line
-function! s:subline( pat, sub, flags )
-	call setline( '.', substitute( getline('.'), a:pat, a:sub, a:flags ) )
-endfunction
-
-" Wrap selected text with a prefix and suffix
-function! s:wraptext( prefix, suffix ) range
-	call setline( a:firstline, a:prefix . getline(a:firstline) )
-	call setline( a:lastline, getline(a:lastline) . a:suffix )
-endfunction
-
 " Fills a string with tabs and spaces to the specified virtual column
 function! s:tabfill( colstart, colend )
 	"if &expandtab
@@ -345,49 +314,6 @@ function! s:trimtrailingspaces()
 	call winrestview( view )
 	call setreg( '/', s )
 endfunction
-
-
-"
-" Text alignment
-"
-
-" Aligns text according to a pattern. The pattern must consist of 3 sub-matches.
-" The first two sub-matches are aligned to the right-most third sub-match.
-" Based off the function in the (wonderful) IBM article:
-" http://www.ibm.com/developerworks/linux/library/l-vim-script-4/index.html
-function! s:align( pattern ) range
-	" Column at which to align to
-	let alignto = 0
-
-	" Get the lines that need to be aligned
-	let lines = []
-	for lnum in range( a:firstline, a:lastline )
-		let linetext = getline( lnum )
-		let fields = matchlist( linetext, a:pattern )
-
-		if !empty(fields)
-			" Get the line to align to
-			let left_width = strdisplaywidth( fields[1] . fields[2] )
-			let alignto = max( [alignto, left_width] )
-
-			call add( lines, { 'line':lnum, 'lval':fields[1], 'rval':fields[3] } )
-		end
-	endfor
-
-	" Align the lines
-	for l in lines
-		call setline( l.line, l.lval . s:tabfill(strdisplaywidth(l.lval),alignto) . l.rval )
-	endfor
-endfunction
-
-" Align defines
-vmap <silent> <leader>ad :call <SID>align('^\(\s*#\s*define\s\+\I\i*\%((.\{-})\)\?\)\(\s\+\)\(.*\)')<CR>
-
-" Align assignments
-vmap <silent> <leader>aa :call <SID>align('^\(.\{-}\)\(\s\+\)\(=.*\)')<CR>
-
-" Align indentations
-vmap <silent> <leader>ai :call <SID>align('^\(\)\(\s*\)\(.*\)')<CR>
 
 
 "
