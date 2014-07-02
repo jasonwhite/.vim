@@ -3,28 +3,25 @@
 	url = https://github.com/SirVer/ultisnips
 [submodule "bundle/markdown"]
 	path = bundle/markdown
-	url = git@github.com:tpope/vim-markdown.git
+	url = https://github.com/tpope/vim-markdown.git
 [submodule "bundle/nerdtree"]
 	path = bundle/nerdtree
-	url = git@github.com:scrooloose/nerdtree.git
-[submodule "nerdcommenter"]
-	path = nerdcommenter
-	url = git@github.com:scrooloose/nerdcommenter.git
+	url = https://github.com/scrooloose/nerdtree.git
 [submodule "bundle/nerdcommenter"]
 	path = bundle/nerdcommenter
-	url = git@github.com:scrooloose/nerdcommenter.git
+	url = https://github.com/scrooloose/nerdcommenter.git
 [submodule "bundle/align"]
 	path = bundle/align
-	url = git@github.com:vim-scripts/Align.git
+	url = https://github.com/vim-scripts/Align.git
 [submodule "bundle/d"]
 	path = bundle/d
-	url = git@github.com:JesseKPhillips/d.vim.git
+	url = https://github.com/JesseKPhillips/d.vim.git
 [submodule "bundle/whitenight"]
 	path = bundle/whitenight
-	url = git@github.com:jasonwhite/vim-whitenight.git
+	url = https://github.com/jasonwhite/vim-whitenight.git
 [submodule "bundle/fish"]
 	path = bundle/fish
-	url = git@github.com:dag/vim-fish.git
+	url = https://github.com/dag/vim-fish.git
 [submodule "bundle/vim-airline"]
 	path = bundle/vim-airline
 	url = https://github.com/bling/vim-airline
