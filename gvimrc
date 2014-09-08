@@ -21,7 +21,7 @@ if has('win32')
 	set guifont=courier_new:h10
 elseif has('unix')
 	" Fall back to Monospace if the patched powerline font isn't there.
-	set guifont=Source\ Code\ Pro\ for\ Powerline,Monospace\ 10
+	set guifont=Source\ Code\ Pro\ for\ Powerline\ 11,Monospace\ 10
 endif
 
 colorscheme github

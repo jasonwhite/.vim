@@ -27,7 +27,7 @@ set backspace=indent,eol,start
 set clipboard^=unnamed
 set expandtab
 set fileformats=unix,dos
-set formatoptions=tcroqanj
+set formatoptions=tcroqnj
 set laststatus=2
 set nowrap
 set number
