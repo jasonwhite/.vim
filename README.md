@@ -3,20 +3,25 @@
 Because no Vim user should get caught without their tediously configured Vim
 files under version control.
 
-See the `bundle/` directory for which plugins are included.
+[Vundle][] is used to manage plugins. See `vimrc` for which plugins are used.
+
+[Vundle]: https://github.com/gmarik/Vundle.vim#about
 
 # Installing
 
-Clone the repository:
-
-	$ git clone --recursive https://github.com/jasonwhite/.vim.git ~/.vim
-	$ ln -s ~/.vim/vimrc ~/.vimrc
-	$ ln -s ~/.vim/gvimrc ~/.gvimrc
-
 Install fonts for [powerline][]/[airline][]:
-
-    $ git clone https://github.com/Lokaltog/powerline-fonts.git ~/.fonts/powerline-fonts
-    $ fc-cache -fv
+```bash
+git clone https://github.com/Lokaltog/powerline-fonts.git ~/.fonts/powerline-fonts
+fc-cache -fv
+```
 
 [powerline]: https://github.com/Lokaltog/powerline
 [airline]: https://github.com/bling/vim-airline
+
+Clone the repository and install plugins:
+```bash
+git clone --recursive https://github.com/jasonwhite/.vim.git ~/.vim
+ln -s ~/.vim/vimrc ~/.vimrc
+ln -s ~/.vim/gvimrc ~/.gvimrc
+vim +PluginInstall +qall
+```
