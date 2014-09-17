@@ -1,27 +1,3 @@
-[submodule "bundle/ultisnips"]
-	path = bundle/ultisnips
-	url = https://github.com/SirVer/ultisnips
-[submodule "bundle/markdown"]
-	path = bundle/markdown
-	url = https://github.com/tpope/vim-markdown.git
-[submodule "bundle/nerdtree"]
-	path = bundle/nerdtree
-	url = https://github.com/scrooloose/nerdtree.git
-[submodule "bundle/nerdcommenter"]
-	path = bundle/nerdcommenter
-	url = https://github.com/scrooloose/nerdcommenter.git
-[submodule "bundle/align"]
-	path = bundle/align
-	url = https://github.com/vim-scripts/Align.git
-[submodule "bundle/d"]
-	path = bundle/d
-	url = https://github.com/JesseKPhillips/d.vim.git
-[submodule "bundle/whitenight"]
-	path = bundle/whitenight
-	url = https://github.com/jasonwhite/vim-whitenight.git
-[submodule "bundle/fish"]
-	path = bundle/fish
-	url = https://github.com/dag/vim-fish.git
-[submodule "bundle/vim-airline"]
-	path = bundle/vim-airline
-	url = https://github.com/bling/vim-airline
+[submodule "bundle/Vundle.vim"]
+	path = bundle/Vundle.vim
+	url = git://github.com/gmarik/Vundle.vim

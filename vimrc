@@ -1,21 +1,31 @@
 "
-" My glorious .vimrc file. Behold its majesty.
+" My glorious .vimrc file. Behold its majesty!
 "
 set nocompatible
 set encoding=utf-8
 
 
-" Pathogen must be initialized before syntax highlighting and filetype
-" detection.
-call pathogen#infect()
-call pathogen#helptags()
+"
+" Set up Vundle plugins
+"
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
+Plugin 'gmarik/Vundle.vim'
+Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'tpope/vim-markdown'
+Plugin 'vim-scripts/Align'
+Plugin 'JesseKPhillips/d.vim'
+Plugin 'dag/vim-fish'
+Plugin 'bling/vim-airline'
+Plugin 'jasonwhite/vim-whitenight'
 
+call vundle#end()
+
+filetype plugin indent on
 syntax enable
-
-filetype on
-filetype plugin on
-filetype indent on
 
 
 "
@@ -49,7 +59,7 @@ set virtualedit=block
 
 " Need a more POSIX compatible shell
 if &shell =~# 'fish$'
-    set shell=sh
+    set shell=bash
 endif
 
 " Save undo history.
