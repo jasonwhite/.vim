@@ -4,6 +4,9 @@
 set nocompatible
 set encoding=utf-8
 
+let g:ycm_server_use_vim_stdout = 1
+let g:ycm_server_log_level = 'debug'
+let g:ycm_path_to_python_interpreter = '/usr/bin/python2'
 
 "
 " Set up Vundle plugins
@@ -21,8 +24,13 @@ Plugin 'JesseKPhillips/d.vim'
 Plugin 'dag/vim-fish'
 Plugin 'bling/vim-airline'
 Plugin 'jasonwhite/vim-whitenight'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
 
 call vundle#end()
+
+" Install with :PluginInstall
 
 filetype plugin indent on
 syntax enable
@@ -253,7 +261,7 @@ augroup vimrc
 	au FileType cpp call s:ft_cpp()
 
 	" Automatically trim trailing spaces for certain files
-	au BufWrite *.{vim,c,cpp,h,lua,php,js,d,di,tex,ltx},[._]vimrc,[._]gvimrc,bbfile call s:trimtrailingspaces()
+	au BufWrite *.{vim,c,cpp,h,lua,php,js,d,di,tex,ltx,py},[._]vimrc,[._]gvimrc,bbfile call s:trimtrailingspaces()
 
 	" Miscellaneous settings
 	au FileType lua call s:ft_lua()
