@@ -24,7 +24,7 @@ Plugin 'JesseKPhillips/d.vim'
 Plugin 'dag/vim-fish'
 Plugin 'bling/vim-airline'
 Plugin 'jasonwhite/vim-whitenight'
-Plugin 'Valloric/YouCompleteMe'
+"Plugin 'Valloric/YouCompleteMe'
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 
@@ -43,6 +43,7 @@ set autoindent
 set autoread
 set backspace=indent,eol,start
 set clipboard^=unnamed
+set directory^=~/.vim/swapfiles//
 set expandtab
 set fileformats=unix,dos
 set formatoptions=tcroqnj

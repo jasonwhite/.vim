@@ -1,0 +1,5 @@
+# Ignore everything except .gitignore
+# This allows this directory to be tracked by Git, but with (almost) no files in
+# it.
+*
+!.gitignore
