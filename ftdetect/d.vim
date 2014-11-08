@@ -1,1 +1,1 @@
-autocmd BufNewFile,BufRead *.di setf d
+autocmd BufNewFile,BufRead *.di setfiletype d
