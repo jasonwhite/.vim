@@ -8,6 +8,10 @@ let g:ycm_server_use_vim_stdout = 1
 let g:ycm_server_log_level = 'debug'
 let g:ycm_path_to_python_interpreter = '/usr/bin/python2'
 
+let g:instant_rst_slow = 1
+let g:instant_rst_bind_scroll = 0
+let g:instant_rst_browser = 'chromium'
+
 "
 " Set up Vundle plugins
 "
@@ -28,6 +32,9 @@ Plugin 'jasonwhite/vim-whitenight'
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 Plugin 'digitaltoad/vim-jade'
+Plugin 'Rykka/riv.vim'
+Plugin 'Rykka/InstantRst'
+Plugin 'Rykka/clickable.vim'
 
 call vundle#end()
 
@@ -195,6 +202,9 @@ nmap <silent> <F5> :echo
 nmap <silent> <F6> :echo
 	\ join(map(synstack(line('.'),col('.')),'synIDattr(v:val,"name")')," > ")<CR>
 
+" Pretty print the JSON from the current line or selected lines.
+nmap <leader>jt :.!python -m json.tool<CR>
+vmap <leader>jt :!python -m json.tool<CR>
 
 " Twiddle case. Press ~ in visual mode to cycle through case conversions.
 function! s:twiddlecase( str )
