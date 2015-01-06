@@ -4,14 +4,6 @@
 set nocompatible
 set encoding=utf-8
 
-let g:ycm_server_use_vim_stdout = 1
-let g:ycm_server_log_level = 'debug'
-let g:ycm_path_to_python_interpreter = '/usr/bin/python2'
-
-let g:instant_rst_slow = 1
-let g:instant_rst_bind_scroll = 0
-let g:instant_rst_browser = 'chromium'
-
 "
 " Set up Vundle plugins
 "
@@ -23,7 +15,6 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'tpope/vim-markdown'
-Plugin 'vim-scripts/Align'
 Plugin 'JesseKPhillips/d.vim'
 Plugin 'dag/vim-fish'
 Plugin 'bling/vim-airline'
@@ -35,6 +26,11 @@ Plugin 'digitaltoad/vim-jade'
 Plugin 'Rykka/riv.vim'
 Plugin 'Rykka/InstantRst'
 Plugin 'Rykka/clickable.vim'
+Plugin 'ntpeters/vim-better-whitespace'
+Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'godlygeek/tabular'
+Plugin 'scrooloose/syntastic'
+Plugin 'airblade/vim-gitgutter'
 
 call vundle#end()
 
@@ -45,17 +41,74 @@ syntax enable
 
 
 "
+" Colorscheme
+"
+colorscheme whitenight
+
+
+"
+" Plugin configuration
+"
+
+" Better Whitespace
+let g:strip_whitespace_on_save              = 1
+let g:better_whitespace_filetypes_blacklist = ['markdown']
+
+" Airline
+let g:airline_powerline_fonts = 1
+
+" YouCompleteMe
+let g:ycm_server_use_vim_stdout      = 1
+let g:ycm_server_log_level           = 'debug'
+let g:ycm_path_to_python_interpreter = '/usr/bin/python2'
+
+" InstantRst
+let g:instant_rst_slow        = 1
+let g:instant_rst_bind_scroll = 0
+let g:instant_rst_browser     = $BROWSER
+
+" Indent Guides
+if has('gui_running')
+    let g:indent_guides_enable_on_vim_startup = 1
+endif
+let g:indent_guides_color_change_percent = 5
+let g:indent_guides_guide_size           = 1
+let g:indent_guides_start_level          = 2
+let g:indent_guides_exclude_filetypes    = ['help', 'nerdtree']
+
+" Syntastic
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list            = 1
+let g:syntastic_check_on_open            = 1
+let g:syntastic_check_on_wq              = 0
+
+" NERDTree
+nnoremap <silent> <F1> :NERDTreeToggle<CR>
+nnoremap <silent> <F2> :NERDTreeFind<CR>
+
+" NERDCommenter
+map <silent> - <leader>c<space>
+
+" TagList
+nnoremap <silent> <F8> :TlistToggle<CR>
+
+" Align
+map <leader>W= <plug>AM_w=
+
+
+"
 " Options
 "
 set autoindent
 set autoread
 set backspace=indent,eol,start
 set clipboard^=unnamed
-"set directory^=~/.vim/swapfiles//
 set expandtab
 set fileformats=unix,dos
+set foldcolumn=1
 set formatoptions=tcroqnj
 set laststatus=2
+set list listchars=precedes:«,extends:»
 set nowrap
 set number
 set ruler
@@ -73,6 +126,7 @@ set tabstop=4
 set textwidth=80
 set timeoutlen=500
 set virtualedit=block
+set wildmenu
 
 " Need a more POSIX compatible shell
 if &shell =~# 'fish$'
@@ -94,7 +148,7 @@ endif
 
 
 if has('unnamedplus')
-	set clipboard^=unnamedplus
+    set clipboard^=unnamedplus
 endif
 
 
@@ -161,7 +215,7 @@ nmap <silent> <leader>d :if &diff<bar>diffoff<bar>else<bar>diffthis<bar>endif<CR
 
 " Open the current working directory in a file explorer
 if has('win32')
-	nmap <silent> <leader>od :exe '!start explorer "'. shellescape(getcwd()) .'"'<CR>
+    nmap <silent> <leader>od :exe '!start explorer "'. shellescape(getcwd()) .'"'<CR>
 endif
 
 " Insert line break in normal mode
@@ -193,14 +247,14 @@ nmap <silent> <F4> :exe 'help '. expand("<cword>")<CR>
 " Get the syntax highlighting group of the current item under the cursor. Very
 " useful when developing a color scheme.
 nmap <silent> <F5> :echo
-	\  "hi<".    synIDattr(synID(line("."),col("."),1),"name") ."> "
-	\ ."trans<". synIDattr(synID(line("."),col("."),0),"name") ."> "
-	\ ."lo<".    synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+    \  "hi<".    synIDattr(synID(line("."),col("."),1),"name") ."> "
+    \ ."trans<". synIDattr(synID(line("."),col("."),0),"name") ."> "
+    \ ."lo<".    synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
 " Show the syntax groups affecting whatever is under the cursor. Also useful
 " when developing a color scheme.
 nmap <silent> <F6> :echo
-	\ join(map(synstack(line('.'),col('.')),'synIDattr(v:val,"name")')," > ")<CR>
+    \ join(map(synstack(line('.'),col('.')),'synIDattr(v:val,"name")')," > ")<CR>
 
 " Pretty print the JSON from the current line or selected lines.
 nmap <leader>jt :.!python -m json.tool<CR>
@@ -208,38 +262,18 @@ vmap <leader>jt :!python -m json.tool<CR>
 
 " Twiddle case. Press ~ in visual mode to cycle through case conversions.
 function! s:twiddlecase( str )
-	if a:str ==# toupper( a:str )
-		let result = tolower( a:str )
-	elseif a:str ==# tolower( a:str )
-		let result = substitute( a:str, '\(\<\w\+\>\)', '\u\1', 'g' )
-	else
-		let result = toupper(a:str)
-	endif
+    if a:str ==# toupper( a:str )
+        let result = tolower( a:str )
+    elseif a:str ==# tolower( a:str )
+        let result = substitute( a:str, '\(\<\w\+\>\)', '\u\1', 'g' )
+    else
+        let result = toupper(a:str)
+    endif
 
-	return result
+    return result
 endfunction
 vnoremap ~ ygv"=<SID>twiddlecase(@")<CR>Pgv
 
-
-"
-" Plugin mappings
-"
-
-" NERDTree
-nnoremap <silent> <F1> :NERDTreeToggle<CR>
-nnoremap <silent> <F2> :NERDTreeFind<CR>
-
-" NERDCommenter
-map <silent> - <leader>c<space>
-
-" TagList
-nnoremap <silent> <F8> :TlistToggle<CR>
-
-" Align
-map <leader>W= <plug>AM_w=
-
-" airline
-let g:airline_powerline_fonts = 1
 
 "
 " Commands
@@ -261,42 +295,42 @@ command! TTS :call s:trimtrailingspaces()
 "
 
 augroup vimrc
-	au!
+    au!
 
-	" Switching to last active tab
-	au TabLeave * let g:lasttab = tabpagenr()
+    " Switching to last active tab
+    au TabLeave * let g:lasttab = tabpagenr()
 
-	" Scroll distance for CTRL-D and CTRL-U
-	au WinEnter * let &scroll=winheight(0)/6
+    " Scroll distance for CTRL-D and CTRL-U
+    au WinEnter * let &scroll=winheight(0)/6
 
-	" C++ settings
-	au FileType cpp call s:ft_cpp()
+    " C++ settings
+    au FileType cpp call s:ft_cpp()
 
-	" Automatically trim trailing spaces for certain files
-	au BufWrite *.{vim,c,cpp,h,lua,php,js,d,di,tex,ltx,py},[._]vimrc,[._]gvimrc,bbfile call s:trimtrailingspaces()
+    " Automatically trim trailing spaces for certain files
+    "au BufWrite *.{vim,c,cpp,h,lua,php,js,d,di,tex,ltx,py},[._]vimrc,[._]gvimrc,bbfile call s:trimtrailingspaces()
 
-	" Miscellaneous settings
-	au FileType lua call s:ft_lua()
-	au FileType vim call s:ft_vim()
-	au FileType markdown call s:ft_markdown()
+    " Miscellaneous settings
+    au FileType lua call s:ft_lua()
+    au FileType vim call s:ft_vim()
+    au FileType markdown call s:ft_markdown()
 augroup end
 
 function! s:ft_cpp()
-	vmap <buffer> <silent> <leader>ac :call <SID>align('^\(.\{-}\)\(\s*\)\(//.*\)')<CR>
+    vmap <buffer> <silent> <leader>ac :call <SID>align('^\(.\{-}\)\(\s*\)\(//.*\)')<CR>
 endfunction
 
 function! s:ft_vim()
-	vmap <buffer> <silent> <leader>ac :call <SID>align('^\(.\{-}\)\(\s*\)\(".*\)')<CR>
+    vmap <buffer> <silent> <leader>ac :call <SID>align('^\(.\{-}\)\(\s*\)\(".*\)')<CR>
 endfunction
 
 function! s:ft_lua()
-	vmap <buffer> <silent> <leader>ac :call <SID>align('^\(.\{-}\)\(\s*\)\(--.*\)')<CR>
+    vmap <buffer> <silent> <leader>ac :call <SID>align('^\(.\{-}\)\(\s*\)\(--.*\)')<CR>
 endfunction
 
 function! s:ft_markdown()
-	" Smart indent mucks with paragraph formatting when a line starts with a
-	" keyword from C.
-	set nosmartindent
+    " Smart indent mucks with paragraph formatting when a line starts with a
+    " keyword from C.
+    set nosmartindent
 endfunction
 
 
@@ -306,43 +340,43 @@ endfunction
 
 " Fills a string with tabs and spaces to the specified virtual column
 function! s:tabfill( colstart, colend )
-	"if &expandtab
-		" Fill with spaces only.
-		return repeat( ' ', a:colend - a:colstart )
-	"endif
+    "if &expandtab
+        " Fill with spaces only.
+        return repeat( ' ', a:colend - a:colstart )
+    "endif
 
-	let ntabs = 0
-	let i = a:colstart
+    let ntabs = 0
+    let i = a:colstart
 
-	" Fill with tabs
-	while ( a:colend - i ) >= &tabstop
-		let i += &tabstop - ( i % &tabstop )
-		let ntabs += 1
-	endwhile
+    " Fill with tabs
+    while ( a:colend - i ) >= &tabstop
+        let i += &tabstop - ( i % &tabstop )
+        let ntabs += 1
+    endwhile
 
-	" Fill the rest with spaces
-	let nspaces = a:colend - i
+    " Fill the rest with spaces
+    let nspaces = a:colend - i
 
-	return repeat("\t", ntabs) . repeat(' ', nspaces)
+    return repeat("\t", ntabs) . repeat(' ', nspaces)
 endfunction
 
 " Called when a file is sent to Vim from Visual Studio
 function! SendToVimualStudio( line, col )
-	call cursor( a:line, a:col )
-	call foreground() " Unfortunately, this doesn't always work
+    call cursor( a:line, a:col )
+    call foreground() " Unfortunately, this doesn't always work
 endfunction
 
 " Trim trailing spaces in the entire file
 function! s:trimtrailingspaces()
-	let s = getreg( '/', 1 )
-	let view = winsaveview()
+    let s = getreg( '/', 1 )
+    let view = winsaveview()
 
-"	execute (a:firstline+1).','.a:lastline .'substitute/\s\+$//e'
-	execute '%substitute/\s\+$//e'
-	execute 'nohlsearch'
+"   execute (a:firstline+1).','.a:lastline .'substitute/\s\+$//e'
+    execute '%substitute/\s\+$//e'
+    execute 'nohlsearch'
 
-	call winrestview( view )
-	call setreg( '/', s )
+    call winrestview( view )
+    call setreg( '/', s )
 endfunction
 
 
@@ -352,21 +386,21 @@ endfunction
 
 " Highlight the word under the cursor just once
 function! s:hlwordon()
-	call s:hlwordoff()
-	let w:hlword = expand('<cword>')
-	let w:hlwordmatch = matchadd('Search', '\<'. w:hlword .'\>' )
+    call s:hlwordoff()
+    let w:hlword = expand('<cword>')
+    let w:hlwordmatch = matchadd('Search', '\<'. w:hlword .'\>' )
 
-	" Set the search register so that n and N can be used to find additional
-	" occurrences of the word.
-	let @/ = '\<'. w:hlword .'\>'
+    " Set the search register so that n and N can be used to find additional
+    " occurrences of the word.
+    let @/ = '\<'. w:hlword .'\>'
 endfunction
 
 function! s:hlwordoff()
-	if exists('w:hlwordmatch')
-		call matchdelete( w:hlwordmatch )
-		unlet w:hlwordmatch
-		unlet w:hlword
-	endif
+    if exists('w:hlwordmatch')
+        call matchdelete( w:hlwordmatch )
+        unlet w:hlwordmatch
+        unlet w:hlword
+    endif
 endfunction
 
 
@@ -374,31 +408,31 @@ endfunction
 " Modify the GUI tab naming convention
 "
 function! GuiTabLabel()
-	let label = ''
-	let bufnrlist = tabpagebuflist( v:lnum )
+    let label = ''
+    let bufnrlist = tabpagebuflist( v:lnum )
 
-	" Append tab number
-	let label .= tabpagenr() .'. '
+    " Append tab number
+    let label .= tabpagenr() .'. '
 
-	" Append the buffer name
-	let bufname = bufname( bufnrlist[tabpagewinnr(v:lnum)-1] )
-	let label .= substitute( bufname, '.*[/\\]', '', '' )
+    " Append the buffer name
+    let bufname = bufname( bufnrlist[tabpagewinnr(v:lnum)-1] )
+    let label .= substitute( bufname, '.*[/\\]', '', '' )
 
-	" Add '+' if one of the buffers in the tab page is modified
-	for bufnr in bufnrlist
-		if getbufvar( bufnr, "&modified" )
-			let label .= ' +'
-			break
-		endif
-	endfor
+    " Add '+' if one of the buffers in the tab page is modified
+    for bufnr in bufnrlist
+        if getbufvar( bufnr, "&modified" )
+            let label .= ' +'
+            break
+        endif
+    endfor
 
-	" Append the number of windows in the tab page if more than one
-	let wincount = tabpagewinnr( v:lnum, '$' )
-	if wincount > 1
-		let label .= ' ('. tabpagewinnr( v:lnum, '$' ) .')'
-	endif
+    " Append the number of windows in the tab page if more than one
+    let wincount = tabpagewinnr( v:lnum, '$' )
+    if wincount > 1
+        let label .= ' ('. tabpagewinnr( v:lnum, '$' ) .')'
+    endif
 
-	return label
+    return label
 endfunction
 
 set guitablabel=%{GuiTabLabel()}
@@ -408,46 +442,46 @@ set guitablabel=%{GuiTabLabel()}
 " Automatically highlights hex values. Useful for developing color schemes.
 "
 " From: http://www.vim.org/scripts/script.php?script_id=2937
-" By:	Yuri Feldman <feldman.yuri1@gmail.com>
+" By:   Yuri Feldman <feldman.yuri1@gmail.com>
 "
 " Modified by myself to work only for the current window.
 "
 function! s:hexhighlight()
-	if has('gui_running')
-		if !exists('w:hexcolored')
-			let w:hexcolors = []
-			let groupid = 4
-			let nline = 0
-			let nlines = line('$')
+    if has('gui_running')
+        if !exists('w:hexcolored')
+            let w:hexcolors = []
+            let groupid = 4
+            let nline = 0
+            let nlines = line('$')
 
-			while nline <= nlines
-				let line = getline( nline )
-				let linematchid = 1
+            while nline <= nlines
+                let line = getline( nline )
+                let linematchid = 1
 
-				while match( line, '#\x\{6}', 0, linematchid ) != -1
-					let hexval = matchstr( line, '#\x\{6}', 0, linematchid )
-					exe 'hi hexColor'. groupid .' guifg='. hexval .' guibg='. hexval
-					let matchid = matchadd( 'hexColor'. groupid, hexval, 25, groupid )
-					let w:hexcolors += ['hexColor'. groupid]
-					let groupid += 1
-					let linematchid += 1
-				endwhile
+                while match( line, '#\x\{6}', 0, linematchid ) != -1
+                    let hexval = matchstr( line, '#\x\{6}', 0, linematchid )
+                    exe 'hi hexColor'. groupid .' guifg='. hexval .' guibg='. hexval
+                    let matchid = matchadd( 'hexColor'. groupid, hexval, 25, groupid )
+                    let w:hexcolors += ['hexColor'. groupid]
+                    let groupid += 1
+                    let linematchid += 1
+                endwhile
 
-				let nline += 1
-			endwhile
+                let nline += 1
+            endwhile
 
-			let w:hexcolored = 1
-			echo "Highlighting hex colors..."
-		else
-			for hexColor in w:hexcolors
-				exe 'highlight clear '.hexColor
-			endfor
-			call clearmatches()
-			unlet w:hexcolored
-			unlet w:hexcolors
-			echo "Unhighlighting hex colors..."
-		endif
-	else
-		echo "HexHighlight only works with a graphical version of vim"
-	endif
+            let w:hexcolored = 1
+            echo "Highlighting hex colors..."
+        else
+            for hexColor in w:hexcolors
+                exe 'highlight clear '.hexColor
+            endfor
+            call clearmatches()
+            unlet w:hexcolored
+            unlet w:hexcolors
+            echo "Unhighlighting hex colors..."
+        endif
+    else
+        echo "HexHighlight only works with a graphical version of vim"
+    endif
 endfunction

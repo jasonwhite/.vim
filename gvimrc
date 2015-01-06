@@ -14,9 +14,6 @@ elseif has('unix')
 	set guifont=Source\ Code\ Pro\ for\ Powerline\ 11,Monospace\ 11
 endif
 
-" Set the color scheme.
-colorscheme github
-
 " Map keys to adjusting the font size.
 if has("gui_gtk2")
     let s:guifont = &guifont
