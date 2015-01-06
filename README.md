@@ -21,7 +21,5 @@ fc-cache -fv
 Clone the repository and install plugins:
 ```bash
 git clone --recursive https://github.com/jasonwhite/.vim.git ~/.vim
-ln -s ~/.vim/vimrc ~/.vimrc
-ln -s ~/.vim/gvimrc ~/.gvimrc
 vim +PluginInstall +qall
 ```
