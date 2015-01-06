@@ -53,6 +53,7 @@ colorscheme whitenight
 " Better Whitespace
 let g:strip_whitespace_on_save              = 1
 let g:better_whitespace_filetypes_blacklist = ['markdown']
+command! TTS :StripWhitespace
 
 " Airline
 let g:airline_powerline_fonts = 1
@@ -92,9 +93,6 @@ map <silent> - <leader>c<space>
 " TagList
 nnoremap <silent> <F8> :TlistToggle<CR>
 
-" Align
-map <leader>W= <plug>AM_w=
-
 
 "
 " Options
@@ -103,12 +101,13 @@ set autoindent
 set autoread
 set backspace=indent,eol,start
 set clipboard^=unnamed
+set cursorline
 set expandtab
 set fileformats=unix,dos
 set foldcolumn=1
 set formatoptions=tcroqnj
 set laststatus=2
-set list listchars=precedes:«,extends:»
+set list listchars=tab:\ \ ,precedes:«,extends:»
 set nowrap
 set number
 set ruler
@@ -203,10 +202,6 @@ nmap <silent> <leader>Q :q!<CR>
 " Create a new tab and move it to the end
 nmap <silent> <leader>T :tabnew<CR>
 
-" Switch to last active tab
-let g:lasttab = 1
-nmap <silent> <leader>tl :exe "tabn ". g:lasttab<CR>
-
 " Move the tab to the end
 nmap <silent> <leader>tm :tabm<CR>
 
@@ -285,9 +280,6 @@ let copyright = 'Copyright (c) '. strftime('%Y') .' Jason White'
 " Insert copyright string
 imap <silent> <C-j>c <C-r>=copyright<CR>
 
-" Manually trim trailing spaces
-command! TTS :call s:trimtrailingspaces()
-
 
 
 "
@@ -297,94 +289,21 @@ command! TTS :call s:trimtrailingspaces()
 augroup vimrc
     au!
 
-    " Switching to last active tab
-    au TabLeave * let g:lasttab = tabpagenr()
-
     " Scroll distance for CTRL-D and CTRL-U
-    au WinEnter * let &scroll=winheight(0)/6
+    au WinEnter * let &scroll=winheight(0)/4
 
-    " C++ settings
-    au FileType cpp call s:ft_cpp()
-
-    " Automatically trim trailing spaces for certain files
-    "au BufWrite *.{vim,c,cpp,h,lua,php,js,d,di,tex,ltx,py},[._]vimrc,[._]gvimrc,bbfile call s:trimtrailingspaces()
-
-    " Miscellaneous settings
-    au FileType lua call s:ft_lua()
-    au FileType vim call s:ft_vim()
-    au FileType markdown call s:ft_markdown()
-augroup end
-
-function! s:ft_cpp()
-    vmap <buffer> <silent> <leader>ac :call <SID>align('^\(.\{-}\)\(\s*\)\(//.*\)')<CR>
-endfunction
-
-function! s:ft_vim()
-    vmap <buffer> <silent> <leader>ac :call <SID>align('^\(.\{-}\)\(\s*\)\(".*\)')<CR>
-endfunction
-
-function! s:ft_lua()
-    vmap <buffer> <silent> <leader>ac :call <SID>align('^\(.\{-}\)\(\s*\)\(--.*\)')<CR>
-endfunction
-
-function! s:ft_markdown()
     " Smart indent mucks with paragraph formatting when a line starts with a
     " keyword from C.
-    set nosmartindent
-endfunction
-
-
-"
-" General functions
-"
-
-" Fills a string with tabs and spaces to the specified virtual column
-function! s:tabfill( colstart, colend )
-    "if &expandtab
-        " Fill with spaces only.
-        return repeat( ' ', a:colend - a:colstart )
-    "endif
-
-    let ntabs = 0
-    let i = a:colstart
-
-    " Fill with tabs
-    while ( a:colend - i ) >= &tabstop
-        let i += &tabstop - ( i % &tabstop )
-        let ntabs += 1
-    endwhile
-
-    " Fill the rest with spaces
-    let nspaces = a:colend - i
-
-    return repeat("\t", ntabs) . repeat(' ', nspaces)
-endfunction
-
-" Called when a file is sent to Vim from Visual Studio
-function! SendToVimualStudio( line, col )
-    call cursor( a:line, a:col )
-    call foreground() " Unfortunately, this doesn't always work
-endfunction
-
-" Trim trailing spaces in the entire file
-function! s:trimtrailingspaces()
-    let s = getreg( '/', 1 )
-    let view = winsaveview()
-
-"   execute (a:firstline+1).','.a:lastline .'substitute/\s\+$//e'
-    execute '%substitute/\s\+$//e'
-    execute 'nohlsearch'
-
-    call winrestview( view )
-    call setreg( '/', s )
-endfunction
+    au FileType markdown set nosmartindent
+augroup end
 
 
 "
 " Word Highlighting
 "
+" Highlights all instances of the word under the cursor.
+"
 
-" Highlight the word under the cursor just once
 function! s:hlwordon()
     call s:hlwordoff()
     let w:hlword = expand('<cword>')
@@ -436,52 +355,3 @@ function! GuiTabLabel()
 endfunction
 
 set guitablabel=%{GuiTabLabel()}
-
-
-"
-" Automatically highlights hex values. Useful for developing color schemes.
-"
-" From: http://www.vim.org/scripts/script.php?script_id=2937
-" By:   Yuri Feldman <feldman.yuri1@gmail.com>
-"
-" Modified by myself to work only for the current window.
-"
-function! s:hexhighlight()
-    if has('gui_running')
-        if !exists('w:hexcolored')
-            let w:hexcolors = []
-            let groupid = 4
-            let nline = 0
-            let nlines = line('$')
-
-            while nline <= nlines
-                let line = getline( nline )
-                let linematchid = 1
-
-                while match( line, '#\x\{6}', 0, linematchid ) != -1
-                    let hexval = matchstr( line, '#\x\{6}', 0, linematchid )
-                    exe 'hi hexColor'. groupid .' guifg='. hexval .' guibg='. hexval
-                    let matchid = matchadd( 'hexColor'. groupid, hexval, 25, groupid )
-                    let w:hexcolors += ['hexColor'. groupid]
-                    let groupid += 1
-                    let linematchid += 1
-                endwhile
-
-                let nline += 1
-            endwhile
-
-            let w:hexcolored = 1
-            echo "Highlighting hex colors..."
-        else
-            for hexColor in w:hexcolors
-                exe 'highlight clear '.hexColor
-            endfor
-            call clearmatches()
-            unlet w:hexcolored
-            unlet w:hexcolors
-            echo "Unhighlighting hex colors..."
-        endif
-    else
-        echo "HexHighlight only works with a graphical version of vim"
-    endif
-endfunction
