@@ -3,9 +3,7 @@
 Because no Vim user should get caught without their tediously configured Vim
 files under version control.
 
-[Vundle][] is used to manage plugins. See `vimrc` for which plugins are used.
-
-[Vundle]: https://github.com/gmarik/Vundle.vim#about
+![Screenshot](/screenshot.png)
 
 # Installing
 

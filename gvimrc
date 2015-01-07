@@ -5,6 +5,7 @@
 set spell         " Because mine isn't always rihgt.
 set guioptions-=T " Disable the tool bar.
 set guioptions-=m " Disable the menu bar.
+set guioptions-=e " Don't show the GTK tabline
 
 " Set font.
 if has('win32')
