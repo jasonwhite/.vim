@@ -101,7 +101,6 @@ set autoindent
 set autoread
 set backspace=indent,eol,start
 set clipboard^=unnamed
-set cursorline
 set expandtab
 set fileformats=unix,dos
 set foldcolumn=1
