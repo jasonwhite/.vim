@@ -3,6 +3,7 @@
 "
 set nocompatible
 set encoding=utf-8
+let mapleader = ';'
 
 "
 " Set up Vundle plugins
@@ -31,6 +32,7 @@ Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'godlygeek/tabular'
 Plugin 'scrooloose/syntastic'
 Plugin 'airblade/vim-gitgutter'
+Plugin 'wting/rust.vim'
 
 call vundle#end()
 
@@ -165,15 +167,15 @@ iab functino function
 iab Functino Function
 iab bytse bytes
 iab Bytse Bytes
-iab lau lua
+iab lau Lua
 iab Lau Lua
+iab ot to
+iab Ot To
 
 
 "
 " Mappings
 "
-
-let mapleader = ';'
 
 " Yank to the end of the line instead of the entire line
 map Y y$
