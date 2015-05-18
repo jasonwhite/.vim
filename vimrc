@@ -27,9 +27,10 @@ Plugin 'Rykka/clickable.vim'
 Plugin 'ntpeters/vim-better-whitespace'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'godlygeek/tabular'
-Plugin 'scrooloose/syntastic'
+"Plugin 'scrooloose/syntastic'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'wting/rust.vim'
+Bundle 'zah/nimrod.vim'
 
 call vundle#end()
 
@@ -108,6 +109,7 @@ set laststatus=2
 set list listchars=tab:\ \ ,precedes:«,extends:»
 set nowrap
 set number
+set relativenumber
 set ruler
 set scroll=8
 set scrolloff=8
