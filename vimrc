@@ -269,17 +269,17 @@ function! s:twiddlecase( str )
 endfunction
 vnoremap ~ ygv"=<SID>twiddlecase(@")<CR>Pgv
 
-
-"
-" Commands
-"
-
 " Short copyright to use in various places. (Can be blank)
 let copyright = 'Copyright (c) '. strftime('%Y') .' Jason White'
 
 " Insert copyright string
 imap <silent> <C-j>c <C-r>=copyright<CR>
 
+" Easier window movement.
+noremap <c-j> <c-w>j
+noremap <c-k> <c-w>k
+noremap <c-h> <c-w>h
+noremap <c-l> <c-w>l
 
 
 "
