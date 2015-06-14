@@ -18,12 +18,10 @@ Plugin 'scrooloose/nerdcommenter'
 Plugin 'tpope/vim-markdown'
 Plugin 'JesseKPhillips/d.vim'
 Plugin 'dag/vim-fish'
-Plugin 'bling/vim-airline'
 Plugin 'jasonwhite/vim-whitenight'
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 Plugin 'digitaltoad/vim-jade'
-Plugin 'Rykka/clickable.vim'
 Plugin 'ntpeters/vim-better-whitespace'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'godlygeek/tabular'
@@ -109,12 +107,11 @@ set laststatus=2
 set list listchars=tab:\ \ ,precedes:«,extends:»
 set nowrap
 set number
-set relativenumber
 set ruler
 set scroll=8
 set scrolloff=8
 set shiftwidth=4
-set showtabline=2
+set showtabline=1
 set sidescroll=1
 set sidescrolloff=12
 set smartindent
@@ -321,37 +318,3 @@ function! s:hlwordoff()
         unlet w:hlword
     endif
 endfunction
-
-
-"
-" Modify the GUI tab naming convention
-"
-function! GuiTabLabel()
-    let label = ''
-    let bufnrlist = tabpagebuflist( v:lnum )
-
-    " Append tab number
-    let label .= tabpagenr() .'. '
-
-    " Append the buffer name
-    let bufname = bufname( bufnrlist[tabpagewinnr(v:lnum)-1] )
-    let label .= substitute( bufname, '.*[/\\]', '', '' )
-
-    " Add '+' if one of the buffers in the tab page is modified
-    for bufnr in bufnrlist
-        if getbufvar( bufnr, "&modified" )
-            let label .= ' +'
-            break
-        endif
-    endfor
-
-    " Append the number of windows in the tab page if more than one
-    let wincount = tabpagewinnr( v:lnum, '$' )
-    if wincount > 1
-        let label .= ' ('. tabpagewinnr( v:lnum, '$' ) .')'
-    endif
-
-    return label
-endfunction
-
-set guitablabel=%{GuiTabLabel()}
