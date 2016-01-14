@@ -48,6 +48,8 @@ colorscheme whitenight
 " Plugin configuration
 "
 
+let g:powerline_pycmd = "py3"
+
 " Better Whitespace
 let g:strip_whitespace_on_save              = 1
 let g:better_whitespace_filetypes_blacklist = ['markdown']
@@ -231,6 +233,7 @@ nmap <silent> <leader>hW :call <SID>hlwordoff()<CR>
 
 " Open the file under the cursor in a new tab
 nnoremap gf <C-w>gf:tabm<CR>
+vnoremap gf <C-w>gf:tabm<CR>
 
 " Highlight hex values
 nmap <silent> <Leader>hh :call <SID>hexhighlight()<CR>
