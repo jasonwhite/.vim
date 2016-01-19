@@ -48,6 +48,9 @@ colorscheme whitenight
 " Plugin configuration
 "
 
+" Powerline
+let g:powerline_pycmd = "py3"
+
 " Better Whitespace
 let g:strip_whitespace_on_save              = 1
 let g:better_whitespace_filetypes_blacklist = ['markdown']
@@ -91,6 +94,9 @@ map <silent> - <leader>c<space>
 " TagList
 nnoremap <silent> <F8> :TlistToggle<CR>
 
+" Highlight last inserted text
+nnoremap gV `[v`]
+
 
 "
 " Options
@@ -104,6 +110,7 @@ set expandtab
 set fileformats=unix,dos
 set foldcolumn=1
 set formatoptions=tcroqnj
+set incsearch
 set laststatus=2
 set lazyredraw
 set list listchars=tab:\ \ ,precedes:«,extends:»
