@@ -28,7 +28,8 @@ Plugin 'godlygeek/tabular'
 "Plugin 'scrooloose/syntastic'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'wting/rust.vim'
-Bundle 'zah/nimrod.vim'
+Plugin 'rking/ag.vim'
+Plugin 'zah/nimrod.vim'
 
 call vundle#end()
 
@@ -83,6 +84,10 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list            = 1
 let g:syntastic_check_on_open            = 1
 let g:syntastic_check_on_wq              = 0
+let g:syntastic_cpp_include_dirs         = ['src']
+
+" Rust
+let g:rust_recommended_style = 0
 
 " NERDTree
 nnoremap <silent> <F1> :NERDTreeToggle<CR>
