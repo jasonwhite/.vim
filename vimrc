@@ -153,7 +153,7 @@ if has('persistent_undo')
         set undodir=$HOME/.vim/undo
     endif
     if !isdirectory(&undodir)
-        call mkdir(&undodir)
+        call mkdir(&undodir, "p")
     endif
 endif
 
