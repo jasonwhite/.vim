@@ -31,6 +31,7 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'wting/rust.vim'
 Plugin 'rking/ag.vim'
 Plugin 'zah/nimrod.vim'
+Plugin 'fatih/vim-go'
 
 call vundle#end()
 
