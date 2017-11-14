@@ -27,7 +27,7 @@ Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'godlygeek/tabular'
 "Plugin 'scrooloose/syntastic'
 Plugin 'airblade/vim-gitgutter'
-Plugin 'wting/rust.vim'
+Plugin 'rust-lang/rust.vim'
 Plugin 'rking/ag.vim'
 "Plugin 'fatih/vim-go'
 Plugin 'PProvost/vim-ps1'
@@ -90,6 +90,7 @@ let g:syntastic_cpp_include_dirs         = ['src']
 
 " Rust
 let g:rust_recommended_style = 0
+let g:rustfmt_autosave = 1
 
 " NERDTree
 nnoremap <silent> <F1> :NERDTreeToggle<CR>
