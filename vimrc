@@ -21,7 +21,6 @@ Plugin 'dag/vim-fish'
 Plugin 'bling/vim-airline'
 Plugin 'jasonwhite/vim-whitenight'
 "Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets'
 Plugin 'digitaltoad/vim-jade'
 Plugin 'ntpeters/vim-better-whitespace'
 Plugin 'nathanaelkane/vim-indent-guides'
@@ -30,8 +29,9 @@ Plugin 'godlygeek/tabular'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'wting/rust.vim'
 Plugin 'rking/ag.vim'
-Plugin 'zah/nimrod.vim'
-Plugin 'fatih/vim-go'
+"Plugin 'fatih/vim-go'
+Plugin 'PProvost/vim-ps1'
+Plugin 'cespare/vim-toml'
 
 call vundle#end()
 
@@ -112,6 +112,7 @@ set autoindent
 set autoread
 set backspace=indent,eol,start
 set clipboard^=unnamed
+set directory=$HOME/.vim/swapfiles//
 set cursorline
 set expandtab
 set fileformats=unix,dos
@@ -127,7 +128,7 @@ set ruler
 set scroll=8
 set scrolloff=8
 set shiftwidth=4
-set showtabline=1
+set showtabline=2
 set sidescroll=1
 set sidescrolloff=12
 set smartindent
@@ -149,7 +150,7 @@ endif
 if has('persistent_undo')
     set undofile
     if has('win32')
-        set undodir=$HOME\\vimfiles\\undo
+        set undodir=$HOME\\.vim\\undo
     else
         set undodir=$HOME/.vim/undo
     endif
@@ -283,6 +284,11 @@ function! s:twiddlecase( str )
 endfunction
 vnoremap ~ ygv"=<SID>twiddlecase(@")<CR>Pgv
 
+
+"
+" Commands
+"
+
 " Short copyright to use in various places. (Can be blank)
 let copyright = 'Copyright (c) '. strftime('%Y') .' Jason White'
 
@@ -329,3 +335,37 @@ function! s:hlwordoff()
         unlet w:hlword
     endif
 endfunction
+
+
+"
+" Modify the GUI tab naming convention
+"
+function! GuiTabLabel()
+    let label = ''
+    let bufnrlist = tabpagebuflist(v:lnum)
+
+    " Append tab number
+    let label .= tabpagenr() .'. '
+
+    " Append the buffer name
+    let bufname = bufname(bufnrlist[tabpagewinnr(v:lnum)-1])
+    let label .= substitute(bufname, '.*[/\\]', '', '')
+
+    " Add '+' if one of the buffers in the tab page is modified
+    for bufnr in bufnrlist
+        if getbufvar(bufnr, "&modified")
+            let label .= ' +'
+            break
+        endif
+    endfor
+
+    " Append the number of windows in the tab page if more than one
+    let wincount = tabpagewinnr(v:lnum, '$')
+    if wincount > 1
+        let label .= ' ('. tabpagewinnr(v:lnum, '$') .')'
+    endif
+
+    return label
+endfunction
+
+set guitablabel=%{GuiTabLabel()}
